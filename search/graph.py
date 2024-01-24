@@ -1,4 +1,5 @@
 import networkx as nx
+import matplotlib.pyplot as plt
 
 class Graph:
     """
@@ -21,8 +22,38 @@ class Graph:
         * If there is an end node input and a path does not exist, return None
 
         """
-        return
+        if end is None:
+            Q = []
+            visited = []
+            Q.append(start)
+            visited.append(start)
+            while len(Q) != 0:
+                v = Q.pop()
+                N = list(self.neighbors(v))
+                for i in N:
+                    if i not in visited:
+                        visited.append(i)
+                        Q.append(i)
+            return visited
+        else:
+            Q = []
+            visited = []
+            Q.append(start)
+            visited.append(start)
+            while len(Q) != 0:
+                v = Q.pop()
+                N = list(self.neighbors(v))
+                for i in N:
+                    if i not in visited:
+                        visited.append(i)
+                        Q.append(i)
+            return visited
 
 
 
-
+G = nx.read_adjlist('data/tiny_network.adjlist', delimiter=';')
+list1 = Graph.bfs(G,'31486345')
+print(list1)
+#print(list(G.neighbors('31486345')))
+#nx.draw(G, with_labels=True, node_color='lightblue', edge_color='black', node_size=200, font_size=10)
+#plt.show()
