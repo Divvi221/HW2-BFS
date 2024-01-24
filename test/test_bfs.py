@@ -1,6 +1,6 @@
 # write tests for bfs
-import pytest
 from search import graph
+import pytest
 
 def test_bfs_traversal():
     """
@@ -10,6 +10,8 @@ def test_bfs_traversal():
     that all nodes are being traversed (ie. returns 
     the right number of nodes, in the right order, etc.)
     """
+    G = graph('data/tiny_network.adjlist')
+    
     pass
 
 def test_bfs():
