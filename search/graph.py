@@ -22,32 +22,51 @@ class Graph:
         * If there is an end node input and a path does not exist, return None
 
         """
-        if end is None:
-            Q = []
-            visited = []
-            Q.append(start)
-            visited.append(start)
-            while len(Q) != 0:
-                v = Q.pop()
+        visited = [start]
+        Q = [(start,[start])] #keep track of starting node and the path
+        while len(Q) != 0:
+            v,path = Q.pop(0)
+            if v==end:
+                return path
+            else: 
                 N = list(self.neighbors(v))
                 for i in N:
                     if i not in visited:
                         visited.append(i)
-                        Q.append(i)
-            return visited
-        else:
-            Q = []
-            visited = []
-            Q.append(start)
-            visited.append(start)
-            while len(Q) != 0:
-                v = Q.pop()
-                N = list(self.neighbors(v))
-                for i in N:
-                    if i not in visited:
-                        visited.append(i)
-                        Q.append(i)
-            return visited
+                        Q.append((i,path+[i]))
+        if end==None or end in visited:
+            return list(visited)
+        else: 
+            return None
+
+#        if end is None:
+#            Q = []
+#            visited = []
+#            Q.append(start)
+#            visited.append(start)
+#            while len(Q) != 0:
+#                v = Q.pop()
+#                N = list(self.neighbors(v))
+#                for i in N:
+#                    if i not in visited:
+#                        visited.append(i)
+#                        Q.append(i)
+#            return visited
+#        else:
+#            Q = []
+#            visited = []
+#            Q.append(start)
+#            visited.append(start)
+#            while len(Q) != 0:
+#                v = Q.pop()
+#                N = list(self.neighbors(v))
+#                for i in N:
+#                    if i not in visited and i!=end:
+#                        visited.append(i)
+#                        Q.append(i)
+#                    else:
+#                        break
+#            return visited
 
 
 
@@ -55,5 +74,5 @@ G = nx.read_adjlist('data/tiny_network.adjlist', delimiter=';')
 list1 = Graph.bfs(G,'31486345')
 print(list1)
 #print(list(G.neighbors('31486345')))
-#nx.draw(G, with_labels=True, node_color='lightblue', edge_color='black', node_size=200, font_size=10)
-#plt.show()
+nx.draw(G, with_labels=True, node_color='lightblue', edge_color='black', node_size=200, font_size=7)
+plt.show()
