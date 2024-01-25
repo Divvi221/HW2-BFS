@@ -12,8 +12,8 @@ def test_bfs_traversal():
     """
     G = graph.Graph('data/tiny_network.adjlist')
     path_list = graph.Graph.bfs(G,'Atul Butte')
-    assert len(path_list) != 0
-    assert len(set(G.nodes())) == len(set(path_list)) #converted it to set to ensure no repeats
+    assert len(path_list) != 0 #ensure that list is not empty
+    assert len(set(graph.Graph.node_list(G))) == len(set(path_list)) #converted it to set to ensure no repeats. This test is to ensure that bfs is traversing through the whole graph
 
 def test_bfs():
     """
@@ -28,14 +28,16 @@ def test_bfs():
     """
     G = graph.Graph('data/citation_network.adjlist')
     path = graph.Graph.bfs(G,'31486345','Tony Capra')
-    print(path)
-    assert path != None
-    assert graph.Graph.shortest_dist(G,'31486345','Tony Capra') == path
+    assert path != None 
+    assert graph.Graph.shortest_dist(G,'31486345','Tony Capra') == path #ensure that bfs returns shortest path traversal
     G1 = graph.Graph('data/test_network.adjlist')
     path1 = graph.Graph.bfs(G1,'31806696','Marina Sirota') 
-    assert path1 == None
+    assert path1 == None #test to ensure that bfs returns None for disconnected start and end nodes 
     try:
-        path2 = graph.Graph.bfs(G,'3180','Marina Sirota') #starting node doesn't exist in the graph 
+        path2 = graph.Graph.bfs(G,'3180','Marina Sirota') #starting node 3180 doesn't exist in the graph 
         assert False, "Expected an exception for a nonexistent node"
     except ValueError as e:
         assert str(e) == "Start node does not exist in this graph", f"Unexpected error message: {e}"
+
+test_bfs()
+test_bfs_traversal()
