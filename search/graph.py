@@ -88,7 +88,7 @@ class Graph:
         return shortest_path
 
 G = nx.read_adjlist('data/test_network.adjlist', delimiter=';')
-list1 = Graph.bfs(G,'31486345')
+list1 = Graph.bfs(G,'31486345') #comment
 #components = list(nx.connected_components(G))
 #print(list1)
 #print(len(G.nodes()))
