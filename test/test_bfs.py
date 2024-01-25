@@ -1,5 +1,6 @@
 # write tests for bfs
 from search import graph
+import networkx as nx 
 import pytest
 
 def test_bfs_traversal():
@@ -11,7 +12,11 @@ def test_bfs_traversal():
     the right number of nodes, in the right order, etc.)
     """
     G = graph.Graph('data/tiny_network.adjlist')
-    path_list = graph.Graph.bfs(G,'Atul Butte')
+    path_list = graph.Graph.bfs(G,'Martin Kampmann')
+    G_other = nx.read_adjlist("data/tiny_network.adjlist",create_using=nx.DiGraph, delimiter=";")
+    networkx_bfs = [x[1] for x in nx.bfs_edges(G_other,source='Martin Kampmann')]
+    networkx_bfs.insert(0,'Martin Kampmann') #my bfs method includes the starting node in the path but networkx bfs does not. Here I am just adding the starting node to the networkx bfs result to check if I performed bfs correctly
+    assert networkx_bfs == path_list 
     assert len(path_list) != 0 #ensure that list is not empty
     assert len(set(graph.Graph.node_list(G))) == len(set(path_list)) #converted it to set to ensure no repeats. This test is to ensure that bfs is traversing through the whole graph
 
@@ -38,6 +43,5 @@ def test_bfs():
         assert False, "Expected an exception for a nonexistent node"
     except ValueError as e:
         assert str(e) == "Start node does not exist in this graph", f"Unexpected error message: {e}"
-
-test_bfs()
-test_bfs_traversal()
+    path3 = graph.Graph.bfs(G1,'31486345')
+    assert len(path3) == 2 #check that the traversal list has 2 lists within it since test_network.adjlist contains a disconnected graph.

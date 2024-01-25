@@ -75,3 +75,10 @@ Make sure to push all your code to github, ensure that your unit tests are corre
 * Readable code with clear comments and method descriptions
 * Updated README with description of your methods
 
+# My Implementation
+* In graph.py I wrote a bfs function accounting for listed edge cases. I also wrote shortest_dist() and node_list() functions in the Graph class to be used for testing. I used nx.is_empty(G), nx.has_path(G), nx.weakly_connected_components(G), nx.shortest_path(), and nx.is_weakly_connected.
+* I added two testing files: test_empty_network.adjlist (no edges, only two unconnected nodes so this is an empty graph) and test_network.adjlist (two unconnected graphs to test edge case).
+* I added a pyproject.toml file.
+* I wrote the unit tests in test_bfs.py
+
+

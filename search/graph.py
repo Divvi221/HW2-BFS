@@ -23,9 +23,11 @@ class Graph:
         """
         if nx.is_empty(self.graph)==True: #if graph is empty, return None
             raise ValueError(f"graph is empty")
+        
         elif start not in self.graph.nodes(): #if starting node is not in the graph
             raise ValueError(f"Start node does not exist in this graph")
-        elif end!=None and nx.has_path(self.graph,start,end): #if there is a path between start and end node
+        
+        elif end!=None and nx.has_path(self.graph,start,end): #if there is a path between start and end node, perform bfs to get the shortest path
             visited = [start]
             Q = [(start,[start])] #keep track of starting node and the path
             while len(Q) != 0:
@@ -40,10 +42,10 @@ class Graph:
                             Q.append((i,path+[i]))
             if end in visited: #end==None or 
                 return list(visited)
-            #else: 
-            #    return None
+
         elif end==None: #if end is none, traverse through the whole graph
-            #if len(list(nx.connected_components(self.graph))) == 1: #if it is a connected graph
+
+            if nx.is_weakly_connected(self.graph): #if it is a connected graph
                 visited = [start]
                 Q = [(start,[start])] #keep track of starting node and the path
                 while len(Q) != 0:
@@ -57,37 +59,34 @@ class Graph:
                                 visited.append(i)
                                 Q.append((i,path+[i]))
                 return list(visited)
-            #elif len(list(nx.connected_components(self.graph))) != 1: #if it is an unconnected graph
-            #    final_list = [] 
-            #    for i in list(nx.connected_components(self.graph)):
-            #        starting_node = list(i)[0] #pick any node (here i chose the first one of each component as the source node)
-            #        visited = [starting_node]
-            #        Q = [(starting_node,[starting_node])] #keep track of starting node and the path
-            #        while len(Q) != 0:
-            #            v,path = Q.pop(0)
-            #            if v==None:
-            #                return path
-            #            else: 
-            #                N = list(self.graph.neighbors(v))
-            #                for i in N:
-            #                    if i not in visited:
-            #                        visited.append(i)
-            #                        Q.append((i,path+[i]))
-            #        final_list.append(visited)
-            #    return final_list
+            
+            elif nx.is_weakly_connected(self.graph)==False: #if it is an unconnected graph
+                final_list = [] 
+                for i in list(nx.weakly_connected_components(self.graph)):
+                    starting_node = list(i)[0] #pick first one of each component as the source node
+                    visited = [starting_node]
+                    Q = [(starting_node,[starting_node])] #keep track of starting node and the path
+                    while len(Q) != 0:
+                        v,path = Q.pop(0)
+                        if v==None:
+                            return path
+                        else: 
+                            N = list(self.graph.neighbors(v))
+                            for i in N:
+                                if i not in visited:
+                                    visited.append(i)
+                                    Q.append((i,path+[i]))
+                    final_list.append(visited)
+                return final_list
+            
         elif end not in self.graph.nodes(): #if ending node is not present in the graph
             if end != None:
                 raise ValueError(f"End node does not exist in this graph")
 
-    def shortest_dist(self,start,end):
+    def shortest_dist(self,start,end): #calculate shortest distance using nx (used for testing)
         shortest_path = nx.shortest_path(self.graph,start,end)
         return shortest_path
     
-    def node_list(self):
+    def node_list(self): #return a list of nodes using nx (used for testing)
         list_node = self.graph.nodes()
         return list_node
-#G1 = Graph('data/tiny_network.adjlist')
-#path1 = Graph.bfs(G1,'Marina Sirota')  
-#print(path1)
-#G2 = Graph('data/test_empty_network.adjlist')
-#path2 = Graph.bfs(G2,'31806696')
