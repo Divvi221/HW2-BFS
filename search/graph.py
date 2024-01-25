@@ -21,9 +21,10 @@ class Graph:
         * If there is an end node input and a path does not exist, return None
 
         """
-        if nx.is_empty(self): #if graph is empty, return None
-            raise ValueError(f"Graph is empty")
-        elif start not in self.nodes(): #if starting node is not in the graph
+        #if nx.is_empty(self): #if graph is empty, return None
+        #    raise ValueError(f"Graph is empty")
+        #elif
+        if start not in self.nodes(): #if starting node is not in the graph
             raise ValueError(f"Start node does not exist in this graph")
         elif end!=None and nx.has_path(self,start,end):
             visited = [start]
@@ -79,9 +80,6 @@ class Graph:
             if end != None:
                 raise ValueError(f"End node does not exist in this graph")
 
-
-
-            #return None
     def shortest_dist(self,start,end):
         shortest_path = nx.shortest_path(self,start,end)
         return shortest_path
