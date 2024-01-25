@@ -1,5 +1,4 @@
 import networkx as nx
-import matplotlib.pyplot as plt
 
 class Graph:
     """
@@ -87,14 +86,3 @@ class Graph:
         shortest_path = nx.shortest_path(self,start,end)
         return shortest_path
 
-G = nx.read_adjlist('data/test_network.adjlist', delimiter=';')
-list1 = Graph.bfs(G,'31486345') #comment
-#components = list(nx.connected_components(G))
-#print(list1)
-#print(len(G.nodes()))
-#if nx.has_path(G,'31486345','Nevan Krogan'):
-#    print("path exists")
-#    print(nx.shortest_path(G,'31486345','Nevan Krogan'))
-#print(list(G.neighbors('31486345')))
-#nx.draw(G, with_labels=True, node_color='lightblue', edge_color='black', node_size=200, font_size=7)
-#plt.show()
